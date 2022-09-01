@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import "antd/dist/antd.css";
+import React, { useState } from "react";
+import { Button, Select, Modal } from "antd";
+const { Option } = Select;
 function App() {
+  const [SelectValue, setSelectValue] = useState("");
+  const [isValid, setIsValid] = useState(false);
+  const [errorDisplay, setErroDisplay] = useState(false);
+
+  const handleOk = () => {
+    if (isValid) {
+      setErroDisplay(false);
+    } else {
+      setErroDisplay(true);
+    }
+  };
+  const handleCancel = () => {};
+  const handleChange = (value) => {
+    setSelectValue(value);
+    setIsValid(true);
+    setErroDisplay(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Modal
+      title="Basic Modal"
+      visible={true}
+      onOk={handleOk}
+      onCancel={handleCancel}
+    >
+      <form>
+        <Select value={SelectValue} onChange={handleChange}>
+          <Option value="jack">Jack</Option>
+          <Option value="lucy">Lucy</Option>
+        </Select>
+        {errorDisplay && <p> Error displayed</p>}
+      </form>
+    </Modal>
   );
 }
 
